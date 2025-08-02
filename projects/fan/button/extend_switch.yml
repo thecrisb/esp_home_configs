@@ -1,0 +1,7 @@
+substitutions:
+  ${fan}_switches:
+    - ${speed_switch}
+
+switch:
+  - id: !extend ${speed_switch}
+    interlock: ${${fan}_switches}

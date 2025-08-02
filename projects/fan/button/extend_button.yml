@@ -1,0 +1,15 @@
+binary_sensor:
+  - id: !extend ${speed_button}
+    on_multi_click:
+      - timing: 
+          - ${button_timing}
+        then:
+        - if:
+            condition:
+                switch.is_on: ${speed_switch}
+            then:
+                - fan.turn_off: ${fan}
+            else:
+                - fan.turn_on:
+                    id: fan_1
+                    speed: ${speed}
