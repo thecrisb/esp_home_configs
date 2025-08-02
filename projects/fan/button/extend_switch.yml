@@ -4,4 +4,5 @@
 
 switch:
   - id: !extend ${speed_switch}
-    interlock: ${${fan}_switches}
+    interlock: ${interlock}
+    interlock_wait_time: 200ms
