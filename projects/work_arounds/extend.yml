@@ -1,3 +1,5 @@
-${type}:
-  - <<: ${extention}
-    id: !extend ${id}
+defaults:
+  eid: 
+    "id": !extend ${id}
+
+${type}: ${[dict(eid, **extention)]}
