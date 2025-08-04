@@ -16,6 +16,26 @@ defaults:
     recheck_threashold: !lambda id(${fan}_auto_thresh_${ident}).publish_state( id(${temp_sensor}).state >= x );
     less_than: !lambda return x <= id(${fan}_auto_${ident-1}).state;
     greater_than: !lambda return x >= id(${fan}_auto_${ident+1}).state;
+    number:
+      actions:
+        - lambda: !lambda id(${fan}_auto_thresh_${ident}).publish_state( id(${temp_sensor}).state >= x ); 
+        - if:
+          condition:
+            lambda: !lambda return x <= id(${fan}_auto_${ident-1}).state;
+          then:
+            number.set:
+              id: "${fan}_auto_${ident-1}"
+              "value": !lambda return x - ${step};
+        - if:
+            condition:
+              lambda: !lambda return x >= id(${fan}_auto_${ident+1}).state;
+            then:
+              number.set:
+                id: "${fan}_auto_${ident+1}"
+                "value": !lambda return x + ${step};
+
+
+
   number_id: "{0}_auto_{1}"
 
 binary_sensor:
@@ -40,40 +60,49 @@ number:
     initial_value: ${default}
 #    icon: ${icon}
     set_action: |-
-      <% set actions = [{"lambda": lambda_fudge.recheck_threashold}] %>
-      <% if not first %>
-        <%
-          set actions = actions+ [
-            {
-              "if": {
-                "condition": {"lambda": lambda_fudge.less_than},
-                "then": {
-                  "number.set": {
-                    "id": number_id.format(fan,ident-1),
-                    "value": lambda_fudge.dec
-                  }
-                }
-              }
-            }
-          ]
-        %>
+      <% if first %>
+        <% set r = [number.actions[0], number.actions[ -1]] %>
+      <% elif last %>
+        <% set r = number.actions[:2]%>
+      <%else%>
+        <% set r = number.actions%>
       <% endif %>
-      <% if not last %>
-        <%
-          set actions = actions+ [
-            {
-              "if": {
-                "condition": {"lambda": lambda_fudge.greater_than},
-                "then": {
-                  "number.set": {
-                    "id": number_id.format(fan,ident+1),
-                    "value": lambda_fudge.inc
-                  }
-                }
-              }
-            }
-          ]
-        %>
-      <% endif %>
-      ${actions}
+      ${r}
+      
+#      <% set actions = [{"lambda": lambda_fudge.recheck_threashold}] %>
+#      <% if not first %>
+#        <%
+#          set actions = actions+ [
+#            {
+#              "if": {
+#                "condition": {"lambda": lambda_fudge.less_than},
+#                "then": {
+#                  "number.set": {
+#                    "id": number_id.format(fan,ident-1),
+#                    "value": lambda_fudge.dec
+#                  }
+#                }
+#              }
+#            }
+#          ]
+#        %>
+#      <% endif %>
+#      <% if not last %>
+#        <%
+#          set actions = actions+ [
+#            {
+#              "if": {
+#                "condition": {"lambda": lambda_fudge.greater_than},
+#                "then": {
+#                  "number.set": {
+#                    "id": number_id.format(fan,ident+1),
+#                    "value": lambda_fudge.inc
+#                  }
+#                }
+#              }
+#            }
+#          ]
+#        %>
+#      <% endif %>
+#      ${actions}
 
