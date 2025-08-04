@@ -41,52 +41,47 @@ number:
     name: Auto Speed ${ident} Temperature
     initial_value: ${default}
 #    icon: ${icon}
-#    set_action:
-
-
-
-
-nuzmber: |-
-    <% 
-      set actions = [
-        {"lambda": "id({0}_auto_thresh_{1}).publish_state( id({2}).state >= x );".format(fan,ident,temp_sensor)}
-      ]
-    %>
-    <% if not first %>
-      <%
-        set actions = actions+ [
-          {
-            "if": {
-              "condition": {"lambda": test_lambda.format("<=",fan,ident-1)},
-              "then": {
-                "number.set": {
-                  "id": number_id.format(fan,ident-1),
-                  "value": lambda_fudge.dec
+    set_action: |-
+      <% 
+        set actions = [
+          {"lambda": "id({0}_auto_thresh_{1}).publish_state( id({2}).state >= x );".format(fan,ident,temp_sensor)}
+        ]
+      %>
+      <% if not first %>
+        <%
+          set actions = actions+ [
+            {
+              "if": {
+                "condition": {"lambda": test_lambda.format("<=",fan,ident-1)},
+                "then": {
+                  "number.set": {
+                    "id": number_id.format(fan,ident-1),
+                    "value": lambda_fudge.dec
+                  }
                 }
               }
             }
-          }
-        ]
-      %>
-    <% endif %>
-    <% if not last %>
-      <%
-        set actions = actions+ [
-          {
-            "if": {
-              "condition": {"lambda": test_lambda.format(">=",fan,ident+1)},
-              "then": {
-                "number.set": {
-                  "id": number_id.format(fan,ident+1),
-                  "value": lambda_fudge.inc
+          ]
+        %>
+      <% endif %>
+      <% if not last %>
+        <%
+          set actions = actions+ [
+            {
+              "if": {
+                "condition": {"lambda": test_lambda.format(">=",fan,ident+1)},
+                "then": {
+                  "number.set": {
+                    "id": number_id.format(fan,ident+1),
+                    "value": lambda_fudge.inc
+                  }
                 }
               }
             }
-          }
-        ]
-      %>
-    <% endif %>
-    ${actions}
+          ]
+        %>
+      <% endif %>
+      ${actions}
 
 #    - if:
 #          condition:
