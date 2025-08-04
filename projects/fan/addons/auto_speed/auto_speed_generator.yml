@@ -57,7 +57,7 @@ nuzmber: |-
         set actions = actions+ [
           {
             "if": {
-              "condition": {"lambda": test_lambda.format("<=",fan,ident-1)}
+              "condition": {"lambda": test_lambda.format("<=",fan,ident-1)},
               "then": {
                 "number.set" {
                   "id": number_id.format(fan,ident-1),
@@ -74,7 +74,7 @@ nuzmber: |-
         set actions = actions+ [
           {
             "if": {
-              "condition": {"lambda": test_lambda.format(">=",fan,ident+1)}
+              "condition": {"lambda": test_lambda.format(">=",fan,ident+1)},
               "then": {
                 "number.set" {
                   "id": number_id.format(fan,ident+1),
