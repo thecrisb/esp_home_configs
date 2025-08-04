@@ -59,7 +59,7 @@ nuzmber: |-
             "if": {
               "condition": {"lambda": test_lambda.format("<=",fan,ident-1)},
               "then": {
-                "number.set" {
+                "number.set": {
                   "id": number_id.format(fan,ident-1),
                   "value": lambda_fudge.dec
                 }
@@ -76,7 +76,7 @@ nuzmber: |-
             "if": {
               "condition": {"lambda": test_lambda.format(">=",fan,ident+1)},
               "then": {
-                "number.set" {
+                "number.set": {
                   "id": number_id.format(fan,ident+1),
                   "value": lambda_fudge.inc
                 }
