@@ -14,11 +14,11 @@ defaults:
   test_lambda: "return x {0} id({1}_auto_{2}).state;"
   number_id: "{0}_auto_{1}"
 
-sensor:
-  - id: !extend ${fan}_wanted_auto_speed
-    channels:
-      - binary_sensor: ${fan}_auto_thresh_${ident}
-        value: 1.0
+#sensor:
+#  - id: !extend ${fan}_wanted_auto_speed
+#    channels:
+#      - binary_sensor: ${fan}_auto_thresh_${ident}
+#        value: 1.0
 
 binary_sensor:
   - id: ${fan}_auto_thresh_${ident}
