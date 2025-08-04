@@ -43,7 +43,7 @@ number:
     initial_value: ${default}
 #    icon: ${icon}
     set_action: |-
-      <% set actions = [{"lambda": recheck_threashold}] %>
+      <% set actions = [{"lambda": lambda_fudge.recheck_threashold}] %>
       <% if not first %>
         <%
           set actions = actions+ [
