@@ -44,8 +44,7 @@ number:
     name: Auto Speed ${ident} Temperature
     initial_value: ${default}
 #    icon: ${icon}
-
-set_action: |-
+    set_action: |-
       <% set actions = [{"lambda": lambda_fudge.recheck_threashold}] %>
       <% if not first %>
         <%
