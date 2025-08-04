@@ -11,11 +11,6 @@ defaults:
   first: false
   last: false
   lambda_fudge:
-    inc: !lambda return x + ${step};
-    dec: !lambda return x - ${step};
-    recheck_threashold: !lambda id(${fan}_auto_thresh_${ident}).publish_state( id(${temp_sensor}).state >= x );
-    less_than: !lambda return x <= id(${fan}_auto_${ident-1}).state;
-    greater_than: !lambda return x >= id(${fan}_auto_${ident+1}).state;
     number:
       actions:
         - lambda: !lambda id(${fan}_auto_thresh_${ident}).publish_state( id(${temp_sensor}).state >= x ); 
