@@ -30,9 +30,9 @@ number:
   - platform: template
     restore_value: true
     entity_category: config
-    min_value: 10
-    max_value: 40
-    step: 1
+    min_value: ${min}
+    max_value: ${max}
+    step: ${step}
     device_class: TEMPERATURE
     unit_of_measurement: °C
     optimistic: true
