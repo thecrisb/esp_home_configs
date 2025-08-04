@@ -41,9 +41,7 @@ number:
     name: Auto Speed ${ident} Temperature
     initial_value: ${default}
 #    icon: ${icon}
-#    set_action: |-
-
-ff: |-
+    set_action: |-
       <% 
         set actions = [
           {"lambda": "id({0}_auto_thresh_{1}).publish_state( id({2}).state >= x );".format(fan,ident,temp_sensor)}
