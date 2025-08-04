@@ -20,12 +20,12 @@ defaults:
       actions:
         - lambda: !lambda id(${fan}_auto_thresh_${ident}).publish_state( id(${temp_sensor}).state >= x ); 
         - if:
-          condition:
-            lambda: !lambda return x <= id(${fan}_auto_${ident-1}).state;
-          then:
-            number.set:
-              id: "${fan}_auto_${ident-1}"
-              "value": !lambda return x - ${step};
+            condition:
+              lambda: !lambda return x <= id(${fan}_auto_${ident-1}).state;
+            then:
+              number.set:
+                id: "${fan}_auto_${ident-1}"
+                "value": !lambda return x - ${step};
         - if:
             condition:
               lambda: !lambda return x >= id(${fan}_auto_${ident+1}).state;
