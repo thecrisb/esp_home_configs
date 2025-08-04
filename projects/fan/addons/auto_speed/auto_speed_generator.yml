@@ -61,11 +61,11 @@ number:
 #    icon: ${icon}
     set_action: |-
       <% if first %>
-        <% set r = [number.actions[0], number.actions[ -1]] %>
+        <% set r = [lambda_fudge.number.actions[0], lambda_fudge.number.actions[ -1]] %>
       <% elif last %>
-        <% set r = number.actions[:2]%>
+        <% set r = lambda_fudge.number.actions[:2]%>
       <%else%>
-        <% set r = number.actions%>
+        <% set r = lambda_fudge.number.actions%>
       <% endif %>
       ${r}
       
