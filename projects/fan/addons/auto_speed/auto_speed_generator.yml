@@ -34,10 +34,6 @@ defaults:
                 id: "${fan}_auto_${ident+1}"
                 "value": !lambda return x + ${step};
 
-
-
-  number_id: "{0}_auto_{1}"
-
 binary_sensor:
   - id: ${fan}_auto_thresh_${ident}
     platform: analog_threshold
@@ -59,50 +55,14 @@ number:
     name: Auto Speed ${ident} Temperature
     initial_value: ${default}
 #    icon: ${icon}
-    set_action: |-
-      <% if first %>
-        <% set r = [lambda_fudge.number.actions[0], lambda_fudge.number.actions[ -1]] %>
-      <% elif last %>
-        <% set r = lambda_fudge.number.actions[:2]%>
-      <%else%>
-        <% set r = lambda_fudge.number.actions%>
-      <% endif %>
-      ${r}
-      
-#      <% set actions = [{"lambda": lambda_fudge.recheck_threashold}] %>
-#      <% if not first %>
-#        <%
-#          set actions = actions+ [
-#            {
-#              "if": {
-#                "condition": {"lambda": lambda_fudge.less_than},
-#                "then": {
-#                  "number.set": {
-#                    "id": number_id.format(fan,ident-1),
-#                    "value": lambda_fudge.dec
-#                  }
-#                }
-#              }
-#            }
-#          ]
-#        %>
-#      <% endif %>
-#      <% if not last %>
-#        <%
-#          set actions = actions+ [
-#            {
-#              "if": {
-#                "condition": {"lambda": lambda_fudge.greater_than},
-#                "then": {
-#                  "number.set": {
-#                    "id": number_id.format(fan,ident+1),
-#                    "value": lambda_fudge.inc
-#                  }
-#                }
-#              }
-#            }
-#          ]
-#        %>
-#      <% endif %>
-#      ${actions}
+    set_action: 
+      then: |-
+        <% if first %>
+          <% set r = [lambda_fudge.number.actions[0], lambda_fudge.number.actions[ -1]] %>
+        <% elif last %>
+          <% set r = lambda_fudge.number.actions[:2]%>
+        <%else%>
+          <% set r = lambda_fudge.number.actions%>
+        <% endif %>
+        ${r}
 
