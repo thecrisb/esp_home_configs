@@ -11,7 +11,7 @@ defaults:
   lambda_fudge:
     inc: !lambda return x + ${step};
     dec: !lambda return x - ${step};
-    recheck_threashold: !lambda "id({0}_auto_thresh_{1}).publish_state( id({2}).state >= x );".format(fan,ident,temp_sensor)}
+    recheck_threashold: !lambda id(${fan}_auto_thresh_${ident}).publish_state( id(${temp_sensor}).state >= x );
   test_lambda: "return x {0} id({1}_auto_{2}).state;"
   number_id: "{0}_auto_{1}"
 
