@@ -1,0 +1,11 @@
+defaults:
+  lamb: !lambda |-
+    ${lambda}
+
+packages:
+  extends:
+    url: https://github.com/${git_hubrepo}
+    path: projects/work_arounds/extend.yml
+    vars:
+      extention:
+        ${key}: ${lamb}

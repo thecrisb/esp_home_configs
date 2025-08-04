@@ -1,0 +1,107 @@
+defaults:
+  icon: mdi:speedometer-medium
+  
+  requires:
+    ident: 3
+    min:
+    max:
+    step: 1
+  first: false
+  last: false
+  lambda_fudge:
+    inc: !lambda return x + ${step};
+    dec: !lambda return x - ${step};
+  test_lambda: "return x {0} id({1}_auto_{2}).state;"
+  number_id: "{0}_auto_{1}"
+
+sensor:
+  - id: !extend ${fan}_wanted_auto_speed
+    channels:
+      - binary_sensor: ${fan}_auto_thresh_${ident}
+        value: 1.0
+
+binary_sensor:
+  - id: ${fan}_auto_thresh_${ident}
+    platform: analog_threshold
+    sensor_id: ${temp_sensor}
+    threshold: !lambda return id(${fan}_auto_${ident}).state;
+
+number:
+  - platform: template
+    restore_value: true
+    entity_category: config
+    min_value: 10
+    max_value: 40
+    step: 1
+    device_class: TEMPERATURE
+    unit_of_measurement: °C
+    optimistic: true
+    mode: box
+    id: ${fan}_auto_${ident}
+    name: Auto Speed ${ident} Temperature
+    initial_value: ${default}
+#    icon: ${icon}
+#    set_action:
+
+
+
+
+nuzmber: |-
+    <% 
+      set actions = [
+        {"lambda": "id({0}_auto_thresh_{1}).publish_state( id({2}).state >= x );".format(fan,ident,temp_sensor)}
+      ]
+    %>
+    <% if not first %>
+      <%
+        set actions = actions+ [
+          {
+            "if": {
+              "condition": {"lambda": test_lambda.format("<=",fan,ident-1)}
+              "then": {
+                "number.set" {
+                  "id": number_id.format(fan,ident-1),
+                  "value": lambda_fudge.dec
+                }
+              }
+            }
+          }
+        ]
+      %>
+    <% endif %>
+    <% if not last %>
+      <%
+        set actions = actions+ [
+          {
+            "if": {
+              "condition": {"lambda": test_lambda.format(">=",fan,ident+1)}
+              "then": {
+                "number.set" {
+                  "id": number_id.format(fan,ident+1),
+                  "value": lambda_fudge.inc
+                }
+              }
+            }
+          }
+        ]
+      %>
+    <% endif %>
+    ${actions}
+
+#    - if:
+#          condition:
+#            lambda: return x ${${type}_t} id(${fan}_auto_${link}).state;
+#          then:
+#            - number.set:
+#                id: ${fan}_auto_${link}
+#                value: !lambda return x ${${type}_a} 1;
+
+      
+      
+#    - if:
+#        condition:
+#          lambda: return x ${${type}_t} id(${fan}_auto_${link}).state;
+#        then:
+#          - number.set:
+#              id: ${fan}_auto_${link}
+#              value: !lambda return x ${${type}_a} 1;
