@@ -29,7 +29,7 @@ ${output_as}:
     <%
       set r = {
         "platform": output_platform,
-        "id": "{0}_{0}".format("${output_as}", pair),
+        "id": "{0}_{1}".format("${output_as}", pair),
         "pin": output_pin
       }
     %>
