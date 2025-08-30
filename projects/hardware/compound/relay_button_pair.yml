@@ -29,14 +29,14 @@ ${output_as}:
     <%
       set r = {
         "platform": output_platform,
-        "id": "${output_as}_{0}".format(pair),
+        "id": "{0}_{0}".format("${output_as}", pair),
         "pin": output_pin
       }
     %>
     <% if not decoupled %>
       <% 
         set r = dict(
-          r, **{"name": "${output_as} {1}".format(pair)}
+          r, **{"name": "{0} {1}".format("${output_as}", pair)}
         )
       %>
     <% endif %>
