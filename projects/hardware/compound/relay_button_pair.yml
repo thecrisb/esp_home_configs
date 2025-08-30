@@ -1,0 +1,44 @@
+substitutions:
+  output_as: output
+
+defaults:
+  decoupled: true
+  input_platform: gpio
+  output_platform: gpio
+
+binary_sensor:
+  - |-
+    <%
+      set b = {
+        "platform": input_platform,
+        "id": "button_{0}".format(pair),
+        "pin": ${input_pin},
+      }
+    %>
+    <% if not decoupled %>
+      <% 
+        set b = dict(
+          b, **{"on_press": [{"switch.toggle": relay_id}]}
+        )
+      %>
+    <% endif %>
+    ${b}
+
+${output_as}:
+  - |-
+    <%
+      set r = {
+    
+        "platform": output_platform,
+        "id": "{0}_{1}".format(output_as, pair),
+        "pin": output_pin
+      }
+    %>
+    <% if not decoupled %>
+      <% 
+        set r = dict(
+          r, **{"name": "{0} {1}".format(output_as, pair)}
+        )
+      %>
+    <% endif %>
+    ${r}
