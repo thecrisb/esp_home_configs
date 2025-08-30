@@ -1,0 +1,10 @@
+defaults:
+  id: state_led
+  name: Status LED
+  internal: "false"
+
+light:
+  - platform: status_led
+    id: ${id}
+    internal: ${internal}
+    pin: ${pin}
