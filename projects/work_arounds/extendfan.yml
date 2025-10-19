@@ -14,7 +14,7 @@ binary_sensor:
                     speed: ${loop.index}
 
 switch:
-  - id: !extend: ${switch}
+  - id: !extend ${switch}
     interlock: ${il}
     interlock_wait_time: ${interlock_wait_time}
     
