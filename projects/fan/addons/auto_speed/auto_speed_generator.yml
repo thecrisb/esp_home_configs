@@ -51,13 +51,37 @@ number:
     initial_value: ${default}
 #    icon: ${icon}
     set_action: 
-      then: |-
-        <% if first %>
-          <% set r = [lambda_fudge.number.actions[0], lambda_fudge.number.actions[ -1]] %>
-        <% elif last %>
-          <% set r = lambda_fudge.number.actions[:2]%>
-        <%else%>
-          <% set r = lambda_fudge.number.actions%>
-        <% endif %>
-        ${r}
+      then: 
+        - lambda: !lambda id(${fan}_auto_thresh_${ident}).publish_state( id(${temp_sensor}).state >= x ); 
 
+        
+packages:
+  number_lambdas:
+    url: https://github.com/thecrisb/esp_home_configs
+    files: |-
+      <% set package = namespace(extends=[])%>
+      <% if not first% >
+        <% set package.extends = package.extends + [
+            {
+              "path": "projects/fan/addons/auto_speed/number_lamda.yml",
+              "vars": {
+                "min": true,
+                "ident": ident
+              }
+            }
+          ] 
+        %>
+      <% endif %>
+      <% if not last% >
+        <% set package.extends = package.extends + [
+            {
+              "path": "projects/fan/addons/auto_speed/number_lamda.yml",
+              "vars": {
+                "min": false,
+                "ident": ident
+              }
+            }
+          ] 
+        %>
+      <% endif %>
+      ${package.extends}
