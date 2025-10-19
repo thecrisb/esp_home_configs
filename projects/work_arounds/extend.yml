@@ -2,4 +2,5 @@ defaults:
   eid: 
     "id": !extend ${id}
 
-${type}: ${[dict(eid, **extention)]}
+${type}: |-
+  ${[dict(eid, **extention)]}
