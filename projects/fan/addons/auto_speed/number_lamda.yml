@@ -11,4 +11,4 @@ number:
           then:
             number.set:
               id: "${fan}_auto_${ident-1 if min else ident+1}"
-              "value": !lambda return x ${- if min else +} ${step};
+              "value": !lambda return x ${"-" if min else "+"} ${step};
