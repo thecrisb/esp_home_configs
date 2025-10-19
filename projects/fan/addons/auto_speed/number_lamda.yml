@@ -1,0 +1,14 @@
+defaults:
+  min: true
+
+number:
+  - id: !extend ${fan}_auto_${ident}
+    set_action:
+      then:
+        - if:
+          condition:
+            lambda: !lambda return x <= id(${fan}_auto_${ident-1 if min else ident+1}).state;
+          then:
+            number.set:
+              id: "${fan}_auto_${ident-1 if min else ident+1}"
+              "value": !lambda return x ${- if min else +} ${step};
