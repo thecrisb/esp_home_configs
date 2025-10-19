@@ -1,7 +1,8 @@
 binary_sensor:
   - id: !extend ${button}
     on_multi_click:
-      - timing: ${button_timing}
+      - timing: 
+          - ${button_timing}
         then:
           - if:
               condition:
