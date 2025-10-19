@@ -1,8 +1,5 @@
-# used to work around !lambda substitution limitations 
-
 defaults:
   icon: mdi:speedometer-medium
-  
   requires:
     ident: 3
     min:
@@ -10,25 +7,6 @@ defaults:
     step: 1
   first: false
   last: false
-  lambda_fudge:
-    number:
-      actions:
-        - lambda: !lambda id(${fan}_auto_thresh_${ident}).publish_state( id(${temp_sensor}).state >= x ); 
-        - if:
-            condition:
-              lambda: !lambda return x <= id(${fan}_auto_${ident-1}).state;
-            then:
-              number.set:
-                id: "${fan}_auto_${ident-1}"
-                "value": !lambda return x - ${step};
-        - if:
-            condition:
-              lambda: !lambda return x >= id(${fan}_auto_${ident+1}).state;
-            then:
-              number.set:
-                id: "${fan}_auto_${ident+1}"
-                "value": !lambda return x + ${step};
-
 
 binary_sensor:
   - id: ${fan}_auto_thresh_${ident}
@@ -55,38 +33,3 @@ number:
       then: 
         - lambda: !lambda id(${fan}_auto_thresh_${ident}).publish_state( id(${temp_sensor}).state >= x ); 
 
-        
-#packages:
-#  number_lambdas:
-#    url: https://github.com/thecrisb/esp_home_configs
-#    files: |-
-#      <% set package = namespace(extends=[])%>
-#      <% if not first %>
-#        <% set package.extends = package.extends + [
-#            {
-#              "path": "projects/fan/addons/auto_speed/number_lamda.yml",
-#              "vars": {
-#                "min": true,
-#                "ident": ident,
-#                "fan": fan,
-#                "step": step
-#              }
-#            }
-#          ] 
-#        %>
-#      <% endif %>
-#      <% if not last %>
-#        <% set package.extends = package.extends + [
-#            {
-#              "path": "projects/fan/addons/auto_speed/number_lamda.yml",
-#              "vars": {
-#                "min": false,
-#                "ident": ident,
-#                "fan": fan,
-#                "step": step
-#              }
-#            }
-#          ] 
-#        %>
-#      <% endif %>
-#      ${package.extends}
