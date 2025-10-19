@@ -1,0 +1,20 @@
+binary_sensor:
+  - id: !extend ${button}
+    on_multi_click:
+      - timing: ${button_timing}
+        then:
+          - if:
+              condition:
+                switch.is_on: ${switch}
+              then:
+                - fan.turn_off: ${fan}
+              else:
+                - fan.turn_on:
+                    id: ${fan}
+                    speed: ${loop.index}
+
+switch:
+  - id: !extend: ${switch}
+    interlock: ${il}
+    interlock_wait_time: ${interlock_wait_time}
+    
