@@ -11,7 +11,7 @@ binary_sensor:
               else:
                 - fan.turn_on:
                     id: ${fan}
-                    speed: ${loop.index}
+                    speed: ${speed}
 
 switch:
   - id: !extend ${switch}
