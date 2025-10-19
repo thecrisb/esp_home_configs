@@ -7,7 +7,7 @@ number:
       then:
         - if:
           condition:
-            lambda: !lambda return x <= id(${fan}_auto_${ident-1 if min else ident+1}).state;
+            lambda: !lambda return x ${"<" if min else">"}= id(${fan}_auto_${ident-1 if min else ident+1}).state;
           then:
             number.set:
               id: "${fan}_auto_${ident-1 if min else ident+1}"
