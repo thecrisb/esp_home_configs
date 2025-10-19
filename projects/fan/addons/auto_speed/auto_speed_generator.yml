@@ -67,7 +67,8 @@ packages:
               "vars": {
                 "min": true,
                 "ident": ident,
-                "fan": fan
+                "fan": fan,
+                "step": step
               }
             }
           ] 
@@ -80,7 +81,8 @@ packages:
               "vars": {
                 "min": false,
                 "ident": ident,
-                "fan": fan
+                "fan": fan,
+                "step": step
               }
             }
           ] 
