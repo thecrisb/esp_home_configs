@@ -66,7 +66,8 @@ packages:
               "path": "projects/fan/addons/auto_speed/number_lamda.yml",
               "vars": {
                 "min": true,
-                "ident": ident
+                "ident": ident,
+                "fan": fan
               }
             }
           ] 
@@ -78,7 +79,8 @@ packages:
               "path": "projects/fan/addons/auto_speed/number_lamda.yml",
               "vars": {
                 "min": false,
-                "ident": ident
+                "ident": ident,
+                "fan": fan
               }
             }
           ] 
