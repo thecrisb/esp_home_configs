@@ -60,7 +60,7 @@ packages:
     url: https://github.com/thecrisb/esp_home_configs
     files: |-
       <% set package = namespace(extends=[])%>
-      <% if not first% >
+      <% if not first %>
         <% set package.extends = package.extends + [
             {
               "path": "projects/fan/addons/auto_speed/number_lamda.yml",
@@ -72,7 +72,7 @@ packages:
           ] 
         %>
       <% endif %>
-      <% if not last% >
+      <% if not last %>
         <% set package.extends = package.extends + [
             {
               "path": "projects/fan/addons/auto_speed/number_lamda.yml",
