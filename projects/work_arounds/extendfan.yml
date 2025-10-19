@@ -16,6 +16,6 @@ binary_sensor:
 
 switch:
   - id: !extend ${switch}
-    interlock: ${il}
+    interlock: ${interlock}
     interlock_wait_time: ${interlock_wait_time}
     
