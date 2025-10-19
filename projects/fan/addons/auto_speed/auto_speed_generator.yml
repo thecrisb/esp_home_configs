@@ -29,6 +29,41 @@ defaults:
                 id: "${fan}_auto_${ident+1}"
                 "value": !lambda return x + ${step};
 
+packages:
+  number_lambdas:
+    url: https://github.com/thecrisb/esp_home_configs
+    files: |-
+      <% set package = namespace(extends=[])%>
+      <% if not first %>
+        <% set package.extends = package.extends + [
+            {
+              "path": "projects/fan/addons/auto_speed/number_lamda.yml",
+              "vars": {
+                "min": true,
+                "ident": ident,
+                "fan": fan,
+                "step": step
+              }
+            }
+          ] 
+        %>
+      <% endif %>
+      <% if not last %>
+        <% set package.extends = package.extends + [
+            {
+              "path": "projects/fan/addons/auto_speed/number_lamda.yml",
+              "vars": {
+                "min": false,
+                "ident": ident,
+                "fan": fan,
+                "step": step
+              }
+            }
+          ] 
+        %>
+      <% endif %>
+      ${package.extends}
+
 binary_sensor:
   - id: ${fan}_auto_thresh_${ident}
     platform: analog_threshold
