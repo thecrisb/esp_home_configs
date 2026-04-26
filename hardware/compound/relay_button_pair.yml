@@ -11,7 +11,7 @@ binary_sensor: |-
         "platform": input_platform,
         "id": "button_{0}".format(pair),
         "pin": ${input_pin},
-      }
+      } )
     %>
     <% if not decoupled %>
       <% 
@@ -27,7 +27,7 @@ ${output_as}: |-
         "platform": output_platform,
         "id": "{0}_{1}".format("${output_as}", pair),
         "pin": output_pin
-      }
+      } )
     %>
     <% if not decoupled %>
       <% 
