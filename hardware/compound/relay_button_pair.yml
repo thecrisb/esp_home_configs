@@ -7,8 +7,9 @@ defaults:
   output_platform: gpio
 
 binary_sensor: |-
+    <% set ns = namespace(b={})%>
     <%
-      set b = {
+      set ns.b = {
         "platform": input_platform,
         "id": "button_{0}".format(pair),
         "pin": ${input_pin},
@@ -16,12 +17,12 @@ binary_sensor: |-
     %>
     <% if not decoupled %>
       <% 
-        set b = dict(
+        set ns.b = dict(
           b, **{"on_press": [{"switch.toggle": relay_id}]}
         )
       %>
     <% endif %>
-    ${b}
+    ${ns.b}
 
 ${output_as}: |-
     <%
