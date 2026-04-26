@@ -6,8 +6,7 @@ defaults:
   input_platform: gpio
   output_platform: gpio
 
-binary_sensor:
-  - |-
+binary_sensor: |-
     <%
       set b = {
         "platform": input_platform,
@@ -24,8 +23,7 @@ binary_sensor:
     <% endif %>
     ${b}
 
-${output_as}:
-  - |-
+${output_as}: |-
     <%
       set r = {
         "platform": output_platform,
