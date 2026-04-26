@@ -7,9 +7,7 @@ defaults:
   output_platform: gpio
 
 binary_sensor: |-
-    <% set ns = namespace(b={})%>
-    <%
-      set ns.b = {
+    <% set ns = namespace(b = {
         "platform": input_platform,
         "id": "button_{0}".format(pair),
         "pin": ${input_pin},
@@ -25,8 +23,7 @@ binary_sensor: |-
     ${ns.b}
 
 ${output_as}: |-
-    <%
-      set r = {
+    <% set ns = namespace(r = {
         "platform": output_platform,
         "id": "{0}_{1}".format("${output_as}", pair),
         "pin": output_pin
@@ -34,9 +31,9 @@ ${output_as}: |-
     %>
     <% if not decoupled %>
       <% 
-        set r = dict(
+        set ns.r = dict(
           r, **{"name": "{0} {1}".format("${output_as}", pair)}
         )
       %>
     <% endif %>
-    ${r}
+    ${ns.r}
