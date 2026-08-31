@@ -1,10 +1,10 @@
-substitutions:
-  output_as: output
-
 defaults:
-  decoupled: true
   input_platform: gpio
   output_platform: gpio
+  default:
+    output_as: relay
+    decoupled: false
+    
 
 binary_sensor: 
   - |-
@@ -14,7 +14,7 @@ binary_sensor:
         "pin": ${input_pin},
       } )
     %>
-    <% if not decoupled %>
+    <% if not (decoupled | default(default.decoupled)) and output_as == "switch" %>
       <% 
         set ns.b = dict(
           b, **{"on_press": [{"switch.toggle": relay_id}]}
@@ -23,7 +23,7 @@ binary_sensor:
     <% endif %>
     ${ns.b}
 
-${output_as}:
+${output_as | default(output_as) }:
   - |-
     <% set ns = namespace(r = {
         "platform": output_platform,
@@ -31,10 +31,10 @@ ${output_as}:
         "pin": output_pin
       } )
     %>
-    <% if not decoupled %>
+    <% if not decoupled | default(default.decoupled)) %>
       <% 
         set ns.r = dict(
-          r, **{"name": "{0} {1}".format("${output_as}", pair)}
+          r, **{"name": "{0} {1}".format("${output_as | default(output_as)}", pair)}
         )
       %>
     <% endif %>
