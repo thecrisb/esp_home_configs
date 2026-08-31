@@ -3,7 +3,8 @@ defaults:
   name: Status LED
   internal: "false"
   ignore_strapping_warning: false
-  invert_status: false
+  default:
+    invert_status: false
 
 light:
   - platform: status_led
@@ -14,7 +15,7 @@ light:
       <% if ignore_strapping_warning %>
         <%set output = output + [ ("ignore_strapping_warning", true) ]%>
       <% endif %>
-      <% if invert_status %>
+      <% if invert_status | default(default.invert_status)%>
         <%set output = output + [ ("inverted", true) ]%>
       <% endif %>
       ${dict(output)}
