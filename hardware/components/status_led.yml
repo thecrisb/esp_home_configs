@@ -10,11 +10,11 @@ light:
     id: ${id}
     internal: ${internal}
     pin: |-
-      <% set output = [ ( "number": gpio ) ]%>
+      <% set output = [ ( "number", gpio ) ]%>
       <% if ignore_strapping_warning %>
-        <%set output = output + [ ("ignore_strapping_warning": true) ]%>
+        <%set output = output + [ ("ignore_strapping_warning", true) ]%>
       <% endif %>
       <% if invert_status %>
-        <%set output = output + [ ("inverted": true) ]%>
+        <%set output = output + [ ("inverted", true) ]%>
       <% endif %>
       ${dict(output)}
