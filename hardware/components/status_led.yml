@@ -2,9 +2,19 @@ defaults:
   id: state_led
   name: Status LED
   internal: "false"
+  ignore_strapping_warning: false
+  invert_status: false
 
 light:
   - platform: status_led
     id: ${id}
     internal: ${internal}
-    pin: ${pin}
+    pin: |-
+      <% set output = [ ( "number": gpio ) ]%>
+      <% if ignore_strapping_warning %>
+        <%set output = output + [ ("ignore_strapping_warning": true) ]%>
+      <% endif %>
+      <% if invert_status %>
+        <%set output = output + [ ("inverted": true) ]%>
+      <% endif %>
+      ${dict(output)}
