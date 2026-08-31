@@ -31,7 +31,7 @@ ${output_as | default(output_as) }:
         "pin": output_pin
       } )
     %>
-    <% if not decoupled | default(default.decoupled)) %>
+    <% if not decoupled | default(default.decoupled) %>
       <% 
         set ns.r = dict(
           r, **{"name": "{0} {1}".format("${output_as | default(output_as)}", pair)}
