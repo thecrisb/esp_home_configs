@@ -5,6 +5,7 @@ i2c_device:
 sensor:
   - platform: template
     name: I2C Raw Value ${address}
+    update_interval: 1s
     lambda: |-
       uint8_t data = 0;
       if (id(unknown_device_${address}).read_register(0x01, &data, 1) == i2c::ERROR_OK) {
