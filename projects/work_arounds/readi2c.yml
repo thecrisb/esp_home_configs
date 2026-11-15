@@ -1,9 +1,3 @@
-globals:
-  - id: register
-    type: int
-    restore_value: no
-    initial_value: '0'
-
 i2c_device:
   - id: unknown_device_${address}
     address: ${address}
