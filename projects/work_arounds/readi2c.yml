@@ -1,3 +1,9 @@
+globals:
+  - id: register
+    type: int
+    restore_value: no
+    initial_value: '0'
+
 i2c_device:
   - id: unknown_device_${address}
     address: ${address}
@@ -9,7 +15,16 @@ sensor:
     state_class: "measurement"
     lambda: |-
       uint8_t data = 0;
-      if (id(unknown_device_${address}).read_register(00, &data, 1) == i2c::ERROR_OK) {
+      if (id(unknown_device_${address}).read_register(id(register).state, &data, 1) == i2c::ERROR_OK) {
         return data;
       }
       return {};
+
+number:
+  - platform: template
+    id: register
+    name: "target register"
+    optimistic: true
+    min_value: 0
+    max_value: 255
+    step: 1
