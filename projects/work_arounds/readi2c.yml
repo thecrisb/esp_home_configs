@@ -9,7 +9,7 @@ sensor:
     state_class: "measurement"
     lambda: |-
       uint8_t data = 0;
-      if (id(unknown_device_${address}).read_register(0x01, &data, 1) == i2c::ERROR_OK) {
+      if (id(unknown_device_${address}).read_register(00, &data, 1) == i2c::ERROR_OK) {
         return data;
       }
       return {};
